@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   RE:FRAME — 業務仕組み化LP モックアップ
+   RE:FRAME — 業務仕組み化LP
    単一HTMLファイル。写真はすべて末尾のアセットブロックに埋め込み済み。
    書体は Google Fonts（明朝＝Shippori Mincho B1／本文＝Noto Sans JP）。
    ネット未接続時はOS標準の明朝（游明朝・ヒラギノ明朝）にフォールバックします。
@@ -403,10 +403,6 @@ body{ word-break: auto-phrase; }
 .about__name em{ font-style:normal; font-size:12px; letter-spacing:.14em; color: var(--ink3); }
 .about__name b{ font-family: var(--mincho); font-size:26px; font-weight:600; letter-spacing:.1em; }
 .about p{ margin:20px 0 0; font-size:14px; line-height:2.15; color: var(--ink2); }
-.about__note{
-  margin-top:24px; padding:14px 16px; border:1px dashed var(--line2);
-  font-size:11.5px; line-height:1.9; color: var(--ink3); background: var(--w);
-}
 .script{
   margin-top:28px; font-family: var(--mincho); font-style:italic; font-weight:500;
   font-size: clamp(17px,1.8vw,23px); letter-spacing:.08em; color: var(--navy2); line-height:1.8;
@@ -495,20 +491,6 @@ body{ word-break: auto-phrase; }
 .foot__e{ text-align:right; font-size:10.5px; letter-spacing:.18em; color:#7C93B3; line-height:2; }
 .foot__r{ height:1px; background: rgba(255,255,255,.12); margin:30px 0 18px; }
 .foot__b{ display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between; font-size:11px; color:#7C93B3; }
-
-/* ============================================================
-   モック注記
-   ============================================================ */
-.mock{
-  position:fixed; z-index:95; left:50%; transform:translateX(-50%); bottom:16px;
-  display:flex; align-items:center; gap:10px; max-width:calc(100% - 28px);
-  padding:9px 8px 9px 15px;
-  background: rgba(14,28,51,.94); color:#E3EBF5;
-  font-size:12px; line-height:1.6;
-  box-shadow:0 12px 30px -12px rgba(0,0,0,.6);
-}
-.mock b{ color:#EFC08A; font-weight:700; }
-.mock button{ appearance:none; border:0; background:transparent; cursor:pointer; color:#8FA6C6; font-size:15px; line-height:1; padding:2px 7px; flex:none; }
 
 /* ============================================================
    スクロール表示（JSが動いたときだけ隠す＝初回描画では常に見える）
@@ -1054,7 +1036,7 @@ body{ word-break: auto-phrase; }
           </article>
         </div>
 
-        <p class="disclaim rv">※ 掲載している工程・数値は、一般的な業務を想定した試算です。特定の企業の実績や、実在する案件の内容ではありません。（本ページはモックアップのため、数値はサンプル値です）</p>
+        <p class="disclaim rv">※ 掲載している工程・数値は、一般的な業務を想定した試算です。特定の企業の実績や、実在する案件の内容ではありません。</p>
       </div>
     </div>
   </div>
@@ -1247,9 +1229,6 @@ body{ word-break: auto-phrase; }
             担当者が休んでも、辞めても、同じ結果が出る。その状態まで持っていくことを仕事の範囲にしています。
             だから棚卸しと手順書づくりを工程から外しません。
           </p>
-          <div class="about__note">
-            ※ 写真は仮の素材です。ご自身の写真に差し替えてください（経歴・保有資格などを足す場合もこの枠内に）。
-          </div>
           <div class="script">Make it repeatable.</div>
         </div>
       </div>
@@ -1332,6 +1311,9 @@ body{ word-break: auto-phrase; }
       </div>
 
       <form class="form rv" id="form" novalidate>
+        <input type="hidden" name="access_key" value="8f2eaf42-26b6-4bee-a4f0-8211d911ea8e">
+        <input type="hidden" name="subject" value="【RE:FRAME】お問い合わせがありました">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <div class="f">
           <label for="fCompany">会社名 <span class="req">必須</span></label>
           <input type="text" id="fCompany" name="company" autocomplete="organization" placeholder="株式会社○○">
@@ -1518,7 +1500,7 @@ body{ word-break: auto-phrase; }
 
   if (eM && eB) { eM.addEventListener("input", render); eB.addEventListener("input", render); render(); }
 
-  /* --- フォーム（モックなので送信しない） --- */
+  /* --- フォーム送信(Web3Forms経由でメール送信) --- */
   var form = document.getElementById("form"), msg = document.getElementById("formMsg");
   if (form) {
     form.addEventListener("submit", function(ev){
@@ -1531,8 +1513,29 @@ body{ word-break: auto-phrase; }
         document.getElementById(miss[0][0]).focus();
         return;
       }
-      msg.style.color = "var(--good)";
-      msg.textContent = "モックアップのため送信されません（本番では担当に通知されます）。";
+      var btn = form.querySelector("button[type=submit]");
+      btn.disabled = true;
+      msg.style.color = "var(--ink3)";
+      msg.textContent = "送信中…";
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      }).then(function(r){ return r.json(); }).then(function(data){
+        btn.disabled = false;
+        if (data.success) {
+          msg.style.color = "var(--good)";
+          msg.textContent = "送信しました。担当より1営業日以内にご連絡します。";
+          form.reset();
+        } else {
+          msg.style.color = "var(--warn)";
+          msg.textContent = "送信に失敗しました。お手数ですが時間をおいて再度お試しください。";
+        }
+      }).catch(function(){
+        btn.disabled = false;
+        msg.style.color = "var(--warn)";
+        msg.textContent = "送信に失敗しました。お手数ですが時間をおいて再度お試しください。";
+      });
     });
   }
 
@@ -1561,9 +1564,6 @@ body{ word-break: auto-phrase; }
     });
   }
 
-  /* --- モック注記 --- */
-  var mk = document.getElementById("mock"), mc = document.getElementById("mockClose");
-  if (mk && mc) mc.addEventListener("click", function(){ mk.remove(); });
 })();
 </script>
 </body>
