@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ゴルフ練習場の紙の受付表・日次集計をiPadで自動化した開発事例｜RE:FRAME</title>
+<meta name="description" content="ゴルフ練習場で、お客様が手書きする受付表と終業後の日次集計を、iPadの受付システムにオーダーメイドで置き換えた事例。回数券の残高管理・料金変更・CSV書き出しまで自動化し、年間300〜450時間の削減を見込みます（導入前の試算）。">
+<link rel="canonical" href="https://reframe-hq.com/case/golf-range">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://reframe-hq.com/case/golf-range">
+<meta property="og:site_name" content="RE:FRAME">
+<meta property="og:title" content="ゴルフ練習場の紙の受付表・日次集計をiPadで自動化した開発事例｜RE:FRAME">
+<meta property="og:description" content="手書きの受付表と終業後の手集計を、iPadの受付システムに。回数券の残高管理・料金変更・CSV書き出しまで自動化した事例です。">
+<meta property="og:image" content="https://reframe-hq.com/img/case-golf-ui.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ゴルフ練習場の紙の受付表・日次集計をiPadで自動化した開発事例｜RE:FRAME">
+<meta name="twitter:description" content="手書きの受付表と終業後の手集計を、iPadの受付システムに。回数券の残高管理・料金変更・CSV書き出しまで自動化した事例です。">
+<meta name="twitter:image" content="https://reframe-hq.com/img/case-golf-ui.jpg">
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ゴルフ練習場の紙の受付表・日次集計をiPadで自動化した開発事例",
+    "description": "お客様が手書きする受付表と終業後の日次集計を、iPadの受付システムにオーダーメイドで置き換えた事例。",
+    "image": "https://reframe-hq.com/img/case-golf-ui.jpg",
+    "datePublished": "2026-10-03",
+    "dateModified": "2026-10-03",
+    "inLanguage": "ja",
+    "mainEntityOfPage": "https://reframe-hq.com/case/golf-range",
+    "author": { "@type": "Organization", "name": "RE:FRAME", "url": "https://reframe-hq.com/" },
+    "publisher": { "@type": "Organization", "name": "RE:FRAME", "url": "https://reframe-hq.com/", "logo": { "@type": "ImageObject", "url": "https://reframe-hq.com/icon-512.png" } }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "トップ", "item": "https://reframe-hq.com/" },
+      { "@type": "ListItem", "position": 2, "name": "開発事例", "item": "https://reframe-hq.com/#case" },
+      { "@type": "ListItem", "position": 3, "name": "ゴルフ練習場の受付・日次集計の自動化" }
+    ]
+  }
+]
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<style id="assets">
+:root{ --img-cta: url("/img/cta.jpg"); }
+</style>
+<style>
+/* ---- 事例ページ専用 ---- */
+.cnav .nav__l{ gap:22px; }
+.chead{ padding: 128px 0 clamp(48px,6vw,80px); background: var(--pale); }
+.crumb{ display:flex; flex-wrap:wrap; gap:6px 10px; margin:0 0 26px; padding:0; list-style:none; font-size:12px; color: var(--ink3); }
+.crumb li + li::before{ content:"／"; margin-right:10px; color: var(--line2); }
+.crumb a{ color: var(--ink2); }
+.chead h1{ margin-top:12px; font-size: clamp(25px,3vw,38px); line-height:1.6; max-width:24em; }
+.chead__lead{ margin:22px 0 0; font-size:15px; line-height:2.1; color: var(--ink2); max-width:46em; }
+.spec{ margin:34px 0 0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border-top:1px solid var(--line2); }
+.spec div{ padding:16px 18px 4px 0; }
+.spec dt{ font-size:11px; font-weight:700; letter-spacing:.14em; color: var(--ink3); }
+.spec dd{ margin:6px 0 0; font-size:14px; line-height:1.8; font-weight:500; }
+.prose p{ margin:0 0 18px; font-size:15px; line-height:2.1; color: var(--ink2); }
+.prose p:last-child{ margin-bottom:0; }
+.pains{ margin:26px 0 0; padding:0; list-style:none; border-top:1px solid var(--line); }
+.pains li{ display:grid; grid-template-columns:28px 1fr; gap:12px; padding:16px 0; border-bottom:1px solid var(--line); font-size:14px; line-height:1.95; }
+.pains li b{ font-family: var(--mincho); font-weight:600; color: var(--warn); }
+.cfig{ margin:30px 0 0; }
+.cfig img{ display:block; width:100%; height:auto; border:1px solid var(--line); background: var(--w); }
+.cfig figcaption{ margin-top:8px; font-size:12px; color: var(--ink3); }
+.cfig--narrow{ max-width:420px; }
+.feats{ margin-top:30px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+.feat{ background: var(--w); border:1px solid var(--line); padding:22px 22px 20px; }
+.sec--pale .feat{ border-color: var(--line); }
+.feat__n{ font-size:10.5px; font-weight:700; letter-spacing:.18em; color: var(--ink3); }
+.feat h3{ margin:8px 0 0; font-size:17px; line-height:1.6; }
+.feat p{ margin:10px 0 0; font-size:13.5px; line-height:2; color: var(--ink2); }
+.pts{ display:grid; gap:0; border-top:1px solid var(--line); }
+.pt{ display:grid; grid-template-columns:46px 1fr; gap:18px; padding:24px 0; border-bottom:1px solid var(--line); }
+.pt__n{ font-family: var(--mincho); font-size:26px; font-weight:600; color: var(--line2); line-height:1.2; }
+.pt h3{ font-size:17.5px; line-height:1.6; }
+.pt p{ margin:10px 0 0; font-size:14px; line-height:2.05; color: var(--ink2); }
+#result .ba{ margin-top:0; }
+#result .gain__n{ font-size: clamp(40px,4.2vw,54px); }
+.alike{ margin:24px 0 0; display:flex; flex-wrap:wrap; gap:10px; padding:0; list-style:none; }
+.alike li{ padding:8px 16px; border:1px solid var(--line2); background: var(--w); font-size:13.5px; }
+.cta__a{ display:grid; gap:12px; }
+@media (max-width: 900px){
+  .cnav{ flex-wrap:nowrap; }
+  .cnav .nav__l{ display:flex; width:auto; margin:0 0 0 auto; padding:0; border:0; flex-direction:row; align-items:center; gap:16px; }
+  .cnav .nav__l a:not(.btn){ padding:0; border:0; font-size:13px; }
+  .cnav .nav__l a.btn{ margin:0; width:auto; }
+  .chead{ padding-top:104px; }
+  .spec{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 620px){
+  .cnav .hide-sp{ display:none; }
+  .cnav .brand__t{ display:none; }
+  .feats{ grid-template-columns:1fr; }
+  .pt{ grid-template-columns:36px 1fr; gap:12px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav cnav" aria-label="メインメニュー">
+  <a class="brand" href="/">
+    <span class="brand__n">RE:FRAME</span>
+    <span class="brand__t">業務を、誰でも回せる形へ。</span>
+  </a>
+  <div class="nav__l">
+    <a class="hide-sp" href="/">トップ</a>
+    <a class="hide-sp" href="/#case">開発事例</a>
+    <a class="btn btn--navy btn--sm" href="/#contact">お問い合わせ</a>
+  </div>
+</nav>
+
+<header class="chead">
+  <div class="wrap">
+    <ol class="crumb" aria-label="パンくずリスト">
+      <li><a href="/">トップ</a></li>
+      <li><a href="/#case">開発事例</a></li>
+      <li>ゴルフ練習場</li>
+    </ol>
+    <div class="lab__en">CASE 01 ／ ゴルフ練習場</div>
+    <h1>ゴルフ練習場の紙の受付表と日次集計を、iPadの受付システムで自動化</h1>
+    <p class="chead__lead">お客様が紙に書く受付表と、終業後にスタッフが手で書き込む日次の集計表。毎日くり返していたこの2つの作業を、紙の様式はそのままにiPadの受付システムへ置き換えています。回数券の残り枚数や料金の変更まで、現場の運用に合わせてオーダーメイドで作りました。</p>
+    <div class="chips">
+      <span class="chip">受付・集計・回数券管理の仕組みを試作済み</span>
+    </div>
+    <dl class="spec">
+      <div><dt>業種</dt><dd>ゴルフ練習場</dd></div>
+      <div><dt>対象業務</dt><dd>受付・日次集計・回数券管理</dd></div>
+      <div><dt>規模</dt><dd>来場 最大100人／日</dd></div>
+      <div><dt>使う端末</dt><dd>受付カウンターのiPad</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main>
+
+<section class="sec" id="problem">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">PROBLEM</div>
+        <h2 class="lab__jp">導入前の課題</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">紙で回ってはいるものの、来場が多い日ほど閉店後の作業が重くなる運用でした。</p>
+      </div>
+      <div class="prose">
+        <p>受付ではお客様に紙の受付表へ氏名・種別などを書いてもらい、クラブやグローブの貸出、前払いで受け取った金額もその場で記録していました。</p>
+        <p>営業が終わると、スタッフがその受付表を見ながら種別ごとに件数を数え、別紙の集計表へ転記して電卓で金額を計算します。同じ情報を2回書き、毎日15項目を手で集計していたことになります。</p>
+        <ul class="pains">
+          <li><b>1</b><span>お客様の手書きと、終業後のスタッフの転記で、同じ内容を2回書いている</span></li>
+          <li><b>2</b><span>入場料・打ち放題・夜間・ボール・貸出など、15項目の件数と金額を毎日手で集計している</span></li>
+          <li><b>3</b><span>回数券を誰が何回分使ったか、紙からは追いにくい</span></li>
+          <li><b>4</b><span>料金の改定がよくあり、そのたびに計算の前提が変わる</span></li>
+        </ul>
+        <figure class="cfig cfig--narrow">
+          <img src="/img/case-golf-sheet.jpg" alt="紙の集計表。入場料・コイン・打ち放題などの項目ごとに件数と金額を手で書き込む" width="640" height="853" loading="lazy">
+          <figcaption>これまで終業後に手で書き込んでいた日次の集計表</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--pale" id="solution">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">SOLUTION</div>
+        <h2 class="lab__jp">つくったもの</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">受付カウンターのiPadで動く、受付・集計・回数券管理の仕組みです。ブラウザで開くだけで使えます。</p>
+      </div>
+      <div>
+        <figure class="cfig" style="margin-top:0;">
+          <img src="/img/case-golf-ui.jpg" alt="iPadの受付画面のデザイン案。プラン選択と確認の2画面" width="1200" height="900" loading="lazy">
+          <figcaption>iPadの受付画面（デザイン案）</figcaption>
+        </figure>
+        <div class="feats">
+          <div class="feat">
+            <div class="feat__n">01</div>
+            <h3>iPadで受付を入力</h3>
+            <p>種別は大きなボタンから選び、数字はテンキーで入力。お客様が入力し、スタッフが確認・修正する流れです。</p>
+          </div>
+          <div class="feat">
+            <div class="feat__n">02</div>
+            <h3>日次集計をその場で自動作成</h3>
+            <p>受付を保存した時点で、種別ごとの件数と金額が集計に反映されます。紙の集計表と同じ項目で確認できます。</p>
+          </div>
+          <div class="feat">
+            <div class="feat__n">03</div>
+            <h3>回数券の残り枚数を自動管理</h3>
+            <p>回数券を買えば残高に加算、使えば減算。お客様ごとの残り枚数と利用履歴がすぐに分かります。</p>
+          </div>
+          <div class="feat">
+            <div class="feat__n">04</div>
+            <h3>料金は現場で誰でも変更</h3>
+            <p>料金改定のたびに作り手へ依頼しなくて済むよう、画面から誰でも単価を変えられるようにしました。</p>
+          </div>
+          <div class="feat">
+            <div class="feat__n">05</div>
+            <h3>CSVで書き出し</h3>
+            <p>日次の集計と受付の明細を、Excelでそのまま開けるCSVで書き出せます。帳簿付けや保管に使えます。</p>
+          </div>
+          <div class="feat">
+            <div class="feat__n">06</div>
+            <h3>取り消しにも対応</h3>
+            <p>入力を間違えたときは受付を取り消すだけで、集計も回数券の残高も元に戻ります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="points">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">POINTS</div>
+        <h2 class="lab__jp">工夫したこと</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">既製品に業務を合わせるのではなく、いまの運用に仕組みを合わせています。</p>
+      </div>
+      <div class="pts">
+        <div class="pt">
+          <div class="pt__n">1</div>
+          <div>
+            <h3>紙の様式と言葉をそのまま画面に</h3>
+            <p>「貸出」「前受」など、現場で使っている項目名と集計の区分をそのまま引き継ぎました。紙からの切り替えで覚え直すことを最小限にしています。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">2</div>
+          <div>
+            <h3>普段パソコンを使わない人でも迷わない画面</h3>
+            <p>大きな文字と押しやすいボタンで、1画面でやることを絞りました。操作するのは、普段パソコンにあまり触れないスタッフです。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">3</div>
+          <div>
+            <h3>パスワードなしで、開けばすぐ使える</h3>
+            <p>受付カウンターに置いたiPadで使う前提なので、ログインの手間をなくしました。忙しい時間帯でも、すぐに受付を始められます。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">4</div>
+          <div>
+            <h3>回数券の「足りない」をその場で知らせる</h3>
+            <p>残り枚数が足りないまま使おうとすると確認が出ます。そのうえで受付を続けることもでき、現場の判断を妨げません。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--pale" id="result">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">RESULT</div>
+        <h2 class="lab__jp">効果の見込み</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">現場導入の前に試算した数値です。導入後に実測値へ更新します。</p>
+      </div>
+      <div class="ba">
+        <div class="ba__c">
+          <span class="state state--warn">BEFORE ／ 紙の運用</span>
+          <p>お客様が紙の受付表に記入し、終業後にスタッフが種別ごとに件数を数えて集計表へ転記。金額は電卓で計算。</p>
+          <div class="ba__s">
+            <div><b>2</b><span>回の記入</span></div>
+            <div><b>15</b><span>項目の手集計</span></div>
+            <div><b>100</b><span>人／日 最大</span></div>
+          </div>
+        </div>
+        <div class="ba__c ba__c--a">
+          <span class="state state--good">AFTER ／ 仕組み化後</span>
+          <p>お客様がiPadで入力し、スタッフが確認・修正。保存と同時に日次集計と回数券の残高が更新され、CSVで書き出せます。</p>
+          <div class="ba__s">
+            <div><b>1</b><span>回の入力</span></div>
+            <div><b>0</b><span>項目の手集計</span></div>
+            <div><b>自動</b><span>回数券の残高</span></div>
+          </div>
+        </div>
+        <div class="gain">
+          <div class="gain__k">年間の削減見込み</div>
+          <div><span class="gain__n">300〜450</span> <span class="gain__u">時間／年</span></div>
+          <p>1日あたり約1〜1.5時間の削減を、来場100人規模の日が月25日あると仮定して年間に換算した導入前の試算です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">PROCESS</div>
+        <h2 class="lab__jp">進め方</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">打ち合わせから確認まで、すべてオンラインで進めています。</p>
+      </div>
+      <div class="pts">
+        <div class="pt">
+          <div class="pt__n">1</div>
+          <div>
+            <h3>紙の様式と料金表を写真で共有</h3>
+            <p>受付表・集計表・料金表をスマートフォンで撮って送っていただくところから始めました。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">2</div>
+          <div>
+            <h3>項目と計算のルールを洗い出し</h3>
+            <p>「貸出」「前受」が何を記録しているか、回数券をどう数えるかなど、紙に書かれていないルールを確認しました。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">3</div>
+          <div>
+            <h3>試作して、実際の画面で確認</h3>
+            <p>動く試作品を作り、画面の大きさや入力の流れを実際の画面で確かめながら調整しています。</p>
+          </div>
+        </div>
+        <div class="pt">
+          <div class="pt__n">4</div>
+          <div>
+            <h3>現場への導入と調整</h3>
+            <p>実際の受付で使いながら、細かな運用に合わせて手直しします。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--pale" id="alike">
+  <div class="wrap">
+    <div class="sec__g">
+      <div>
+        <div class="lab__en">SIMILAR</div>
+        <h2 class="lab__jp">似た業務にも</h2>
+        <div class="lab__rule"></div>
+      </div>
+      <div class="prose">
+        <p>紙の受付表や来場記録を、終業後にまとめ直している業務なら、同じ考え方で仕組みにできます。回数券・チケット・前払い制の残高管理がある業務とも相性が良いです。</p>
+        <ul class="alike">
+          <li>バッティングセンター</li>
+          <li>スポーツ施設・プール</li>
+          <li>釣り堀・レジャー施設</li>
+          <li>教室・スクール</li>
+          <li>貸しスペース・貸し会議室</li>
+          <li>回数券のある店舗</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="cta">
+  <div class="wrap cta__in">
+    <div class="cta__g">
+      <div>
+        <div class="cta__k">CONTACT</div>
+        <h2>紙の受付や手集計、<br>うちでも減らせる？</h2>
+        <p>いまの紙の様式を写真で送っていただくだけで、仕組みにできるかを無料でお答えします。打ち合わせから納品まで完全オンライン・全国対応です。</p>
+      </div>
+      <div class="cta__a">
+        <a class="btn btn--white" href="/#contact">無料で相談する</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="foot__in">
+    <div class="foot__t">
+      <a class="brand" href="/">
+        <span class="brand__n">RE:FRAME</span>
+        <span class="brand__t">業務を、誰でも回せる形へ。</span>
+      </a>
+      <div class="foot__l">
+        <a href="/">トップ</a>
+        <a href="/#service">サービス</a>
+        <a href="/#case">開発事例</a>
+        <a href="/#cost">費用</a>
+        <a href="/#faq">よくある質問</a>
+        <a href="/#contact">お問い合わせ</a>
+      </div>
+      <div class="foot__e">MAKE IT REPEATABLE<br>WORK THAT ANYONE CAN RUN</div>
+    </div>
+    <div class="foot__r"></div>
+    <div class="foot__b">
+      <span>© 2026 RE:FRAME. All rights reserved. <a href="/privacy" style="color:inherit;text-decoration:underline;">プライバシーポリシー</a></span>
+      <span>掲載の数値は導入前の試算で、導入後の実績ではありません。事例の掲載はお客様の許可を得ています。</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
