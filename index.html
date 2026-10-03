@@ -357,6 +357,18 @@ body{ word-break: auto-phrase; }
 .gain__n{ font-family: var(--mincho); font-size: clamp(46px,5.4vw,70px); font-weight:600; line-height:1.1; letter-spacing:.01em; font-variant-numeric: tabular-nums; }
 .gain__u{ font-size:17px; color:#8FA6C6; }
 .gain p{ margin:12px 0 0; font-size:12.5px; line-height:1.95; color:#93A8C4; }
+.sec--pale .case__k{ color: var(--ink3); }
+.sec--pale .ba__c, .sec--pale .gain{ border-top-color: var(--line2); }
+.sec--pale .ba__c--a{ border-top-color: var(--good); }
+.sec--pale .ba__c p{ color: var(--ink2); }
+.sec--pale .ba__s div span, .sec--pale .gain__k, .sec--pale .gain__u, .sec--pale .gain p{ color: var(--ink3); }
+.sec--pale .ba__c--a .ba__s div b{ color: var(--good); }
+#case .gain__n{ font-size: clamp(40px,4.2vw,54px); }
+.case__fig{ margin-top:26px; display:grid; grid-template-columns:1fr 1.7fr; gap:18px; align-items:start; }
+#case .case, .case__fig figure{ min-width:0; }
+.case__fig figure{ margin:0; }
+.case__fig img{ display:block; width:100%; height:auto; border:1px solid var(--line); background: var(--w); }
+.case__fig figcaption{ margin-top:8px; font-size:11.5px; color: var(--ink3); }
 .disclaim{ margin-top: clamp(32px,4vw,52px); padding-top:18px; border-top:1px solid rgba(255,255,255,.16); font-size:11.5px; line-height:1.9; color:#8FA6C6; }
 
 /* ============================================================
@@ -585,6 +597,7 @@ body{ word-break: auto-phrase; }
 }
 @media (max-width: 620px){
   .ba{ grid-template-columns:1fr; }
+  .case__fig{ grid-template-columns:1fr; }
   .form{ grid-template-columns:1fr; }
   .works{ grid-template-columns:1fr 1fr; gap:22px 16px; }
   .row{ grid-template-columns:24px 1fr 58px; }
@@ -647,6 +660,7 @@ body{ word-break: auto-phrase; }
     <a href="#service">サービス</a>
     <a href="#flow">進め方</a>
     <a href="#works">対象業務</a>
+    <a href="#case">事例</a>
     <a href="#cost">費用</a>
     <a href="#about">運営者情報</a>
     <a class="btn btn--navy btn--sm" href="#contact">お問い合わせ</a>
@@ -1126,6 +1140,68 @@ body{ word-break: auto-phrase; }
 </section>
 
 <!-- ==========================================================
+     開発事例
+     ========================================================== -->
+<section class="sec sec--pale" id="case">
+  <div class="wrap">
+    <div class="sec__g">
+      <div class="rv">
+        <div class="lab__en">CASE</div>
+        <h2 class="lab__jp">開発事例</h2>
+        <div class="lab__rule"></div>
+        <p class="lab__d">実在のお客様の業務を、オーダーメイドで仕組みにしている事例です。掲載の許可をいただいています。</p>
+      </div>
+
+      <article class="case rv">
+        <div class="case__k">CASE 01 ／ ゴルフ練習場</div>
+        <h3>紙の受付表と日次集計を、iPad受付で自動化</h3>
+        <div class="chips">
+          <span class="chip">受付・集計・回数券管理の仕組みを試作済み</span>
+          <span class="chip">現場導入の準備中</span>
+        </div>
+
+        <div class="case__fig">
+          <figure>
+            <img src="/img/case-golf-sheet.jpg" alt="紙の集計表。入場料・コイン・打ち放題などの項目ごとに件数と金額を手で書き込む" width="640" height="853" loading="lazy">
+            <figcaption>これまで：終業後に手で書き込んでいた集計表</figcaption>
+          </figure>
+          <figure>
+            <img src="/img/case-golf-ui.jpg" alt="iPadの受付画面のデザイン案。プラン選択と確認の2画面" width="1200" height="900" loading="lazy">
+            <figcaption>これから：iPadの受付画面（デザイン案）</figcaption>
+          </figure>
+        </div>
+
+        <div class="ba">
+          <div class="ba__c">
+            <span class="state state--warn">BEFORE ／ 紙の運用</span>
+            <p>お客様が紙の受付表に記入し、終業後にスタッフが種別ごとに件数を数えて集計表へ転記。金額は電卓で計算していました。来場が多い日ほど、閉店後の作業が重くなります。</p>
+            <div class="ba__s">
+              <div><b>2</b><span>回の記入</span></div>
+              <div><b>15</b><span>項目の手集計</span></div>
+              <div><b>100</b><span>人／日 最大</span></div>
+            </div>
+          </div>
+          <div class="ba__c ba__c--a">
+            <span class="state state--good">AFTER ／ 仕組み化後</span>
+            <p>お客様がiPadで入力し、スタッフが確認・修正。保存と同時に日次集計と回数券の残り枚数まで自動で更新され、CSVで書き出せます。料金は現場で誰でも変更できます。</p>
+            <div class="ba__s">
+              <div><b>1</b><span>回の入力</span></div>
+              <div><b>0</b><span>項目の手集計</span></div>
+              <div><b>自動</b><span>回数券の残高</span></div>
+            </div>
+          </div>
+          <div class="gain">
+            <div class="gain__k">年間の削減見込み</div>
+            <div><span class="gain__n">300〜450</span> <span class="gain__u">時間／年</span></div>
+            <p>1日あたり約1〜1.5時間の削減を、来場100人規模の日が月25日あると仮定して年間に換算した導入前の試算です。導入後に実測値へ更新します。</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
      費用
      ========================================================== -->
 <section class="sec" id="cost">
@@ -1451,6 +1527,7 @@ body{ word-break: auto-phrase; }
         <a href="#flow">進め方</a>
         <a href="#works">対象業務</a>
         <a href="#ordermade">オーダーメイド開発</a>
+        <a href="#case">開発事例</a>
         <a href="#cost">費用</a>
         <a href="#reason">選ばれる理由</a>
         <a href="#about">運営者情報</a>
@@ -1462,7 +1539,7 @@ body{ word-break: auto-phrase; }
     <div class="foot__r"></div>
     <div class="foot__b">
       <span>© 2026 RE:FRAME. All rights reserved. <a href="/privacy" style="color:inherit;text-decoration:underline;">プライバシーポリシー</a></span>
-      <span>掲載写真は Openverse 経由で取得した CC0（パブリックドメイン）素材です。掲載の工程・数値は一般的な業務を想定した試算で、特定の企業の実績ではありません。</span>
+      <span>開発事例を除く掲載写真は Openverse 経由で取得した CC0（パブリックドメイン）素材です。業務例・変化のしかたの工程・数値は一般的な業務を想定した試算で、特定の企業の実績ではありません。開発事例の効果は導入前の見込みです。</span>
     </div>
   </div>
 </footer>
